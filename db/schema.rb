@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_25_053645) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_25_153532) do
+  create_table "credentials", force: :cascade do |t|
+    t.string "name", limit: 200, null: false
+    t.string "abbreviation", limit: 200
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["abbreviation"], name: "index_credentials_on_abbreviation", unique: true
+    t.index ["name"], name: "index_credentials_on_name", unique: true
+  end
+
   create_table "insurance_providers", force: :cascade do |t|
     t.string "name", limit: 200, null: false
     t.string "slug", limit: 200, null: false

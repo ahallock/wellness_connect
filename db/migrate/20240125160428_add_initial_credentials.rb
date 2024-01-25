@@ -2,7 +2,7 @@ class AddInitialCredentials < ActiveRecord::Migration[7.1]
   def up
     Credential.create(name: "Licensed Professional Counselor", abbreviation: "LPC")
     Credential.create(name: "Licensed Marriage and Family Therapist", abbreviation: "LMFT")
-    Credential.create(name: "Licensed Clinical Social Worker ", abbreviation: "LCSW")
+    Credential.create(name: "Licensed Clinical Social Worker", abbreviation: "LCSW")
     Credential.create(name: "Psychologist", abbreviation: "Ph.D.")
     Credential.create(name: "Psychologist", abbreviation: "Psy.D.")
     Credential.create(name: "Psychiatrist", abbreviation: "M.D.")

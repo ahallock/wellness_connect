@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_25_164817) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_25_163244) do
   create_table "credentials", force: :cascade do |t|
     t.string "abbreviation", limit: 200
     t.string "name", limit: 200, null: false
@@ -53,15 +53,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_25_164817) do
     t.index ["therapist_id"], name: "index_offices_therapists_on_therapist_id"
   end
 
-  create_table "therapist_offices", force: :cascade do |t|
-    t.integer "therapist_id", null: false
-    t.integer "office_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["office_id"], name: "index_therapist_offices_on_office_id"
-    t.index ["therapist_id"], name: "index_therapist_offices_on_therapist_id"
-  end
-
   create_table "therapists", force: :cascade do |t|
     t.string "first_name", limit: 200, null: false
     t.string "last_name", limit: 200, null: false
@@ -77,6 +68,4 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_25_164817) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "therapist_offices", "offices"
-  add_foreign_key "therapist_offices", "therapists"
 end

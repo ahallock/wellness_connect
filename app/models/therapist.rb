@@ -9,4 +9,8 @@ class Therapist < ApplicationRecord
   validates :bio, presence: true, text_tier: { tier: :text_long }
   validates :phone, format: { with: /\A\+\d{1,3}\d{6,14}\z/, message: "should be in E.164 format" }, text_tier: { tier: :text_standard }
   validates :avatar_url, presence: true, text_tier: { tier: :text_standard }
+
+  has_and_belongs_to_many :credentials
+  has_and_belongs_to_many :insurance_providers
+  has_and_belongs_to_many :offices
 end

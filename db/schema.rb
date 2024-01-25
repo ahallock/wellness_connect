@@ -16,12 +16,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_25_053645) do
     t.string "slug", limit: 200, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_insurance_providers_on_name", unique: true
+    t.index ["slug"], name: "index_insurance_providers_on_slug", unique: true
   end
 
   create_table "offices", force: :cascade do |t|
     t.string "name", limit: 200, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_offices_on_name", unique: true
   end
 
   create_table "therapists", force: :cascade do |t|

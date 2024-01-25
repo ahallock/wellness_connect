@@ -16,7 +16,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_25_045044) do
     t.string "last_name", limit: 200, null: false
     t.boolean "telehealth", null: false
     t.string "profession", limit: 200, null: false
-    t.boolean "license_status", null: false
+    t.boolean "license_valid", null: false
     t.string "website", limit: 200
     t.string "email", limit: 200, null: false
     t.text "bio", limit: 2000, null: false

@@ -10,14 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_25_153532) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_25_163244) do
   create_table "credentials", force: :cascade do |t|
-    t.string "name", limit: 200, null: false
     t.string "abbreviation", limit: 200
+    t.string "name", limit: 200, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["abbreviation"], name: "index_credentials_on_abbreviation", unique: true
-    t.index ["name"], name: "index_credentials_on_name", unique: true
+  end
+
+  create_table "credentials_therapists", id: false, force: :cascade do |t|
+    t.integer "therapist_id", null: false
+    t.integer "credential_id", null: false
+    t.index ["therapist_id"], name: "index_credentials_therapists_on_therapist_id"
   end
 
   create_table "insurance_providers", force: :cascade do |t|
@@ -29,11 +34,23 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_25_153532) do
     t.index ["slug"], name: "index_insurance_providers_on_slug", unique: true
   end
 
+  create_table "insurance_providers_therapists", id: false, force: :cascade do |t|
+    t.integer "therapist_id", null: false
+    t.integer "insurance_provider_id", null: false
+    t.index ["therapist_id"], name: "index_insurance_providers_therapists_on_therapist_id"
+  end
+
   create_table "offices", force: :cascade do |t|
     t.string "name", limit: 200, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_offices_on_name", unique: true
+  end
+
+  create_table "offices_therapists", id: false, force: :cascade do |t|
+    t.integer "therapist_id", null: false
+    t.integer "office_id", null: false
+    t.index ["therapist_id"], name: "index_offices_therapists_on_therapist_id"
   end
 
   create_table "therapists", force: :cascade do |t|

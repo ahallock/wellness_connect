@@ -13,4 +13,33 @@ class Therapist < ApplicationRecord
   has_and_belongs_to_many :credentials
   has_and_belongs_to_many :insurance_providers
   has_and_belongs_to_many :offices
+
+  def self.search(params, options = {})
+    query = Therapist
+    query = 
+      query
+      .preload(:offices)
+      .preload(:insurance_providers)
+      .preload(:credentials)
+
+    query = query.where(telehealth: true) if params[:telehealth] == true
+
+    if params[:offices].present?
+      query =
+        query
+          .joins(:offices_therapists)
+          .joins(:offices)
+          .where(offices: { name: params[:offices] })
+    end
+
+    if params[:insurance_providers].present?
+      query =
+        query
+          .joins(:insurance_providers_therapists)
+          .joins(:insurance_providers)
+          .where(insurance_providers: { name: params[:insurance_providers] })
+    end
+
+    RailsCursorPagination::Paginator.new(query, **params.slice(:before, :after)).fetch(with_total: true)
+  end
 end

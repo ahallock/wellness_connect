@@ -71,4 +71,9 @@ group :test do
   gem "selenium-webdriver"
   gem "rspec", "~> 3.12"
   gem "rspec-rails", "~> 6.1"
+  gem "factory_bot_rails", "~> 6.4"
 end
+
+gem "dry-schema", "~> 1.13"
+
+gem "rails_cursor_pagination", "~> 0.4.0"

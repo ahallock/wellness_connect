@@ -1,12 +1,18 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
+import { Button } from "@/components/ui/button"
 
 interface AppProps {
   arg: string;
 }
 
 const App = ({ arg }: AppProps) => {
-  return <div>{`Hello, ${arg}!`}</div>;
+  return (
+    <>
+      <Button variant="outline">Button</Button>
+      <div>Hello {arg}!</div>
+    </>
+  )
 };
 
 document.addEventListener("DOMContentLoaded", () => {

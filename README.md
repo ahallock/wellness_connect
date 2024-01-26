@@ -1,24 +1,20 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Introduction
 
-Things you may want to cover:
+Wellness Connect is a local directory of therapists in the NYC area.
 
-* Ruby version
+## Installation
+### Install dependencies
+* `bundle install`
+* `yarn install`
 
-* System dependencies
+### Setup database
+* `bin/rails db:create`
+* `bin/rails db:migrate`
 
-* Configuration
+### Load sample therapist data
+`bin/rake load_sample_therapists`
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### Start the server
+`bin/dev`

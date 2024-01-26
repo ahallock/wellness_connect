@@ -16,18 +16,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-const insurance_providers = [
-  {
-    value: "humana",
-    label: "Humana",
-  },
-  {
-    value: "bluecross",
-    label: "Blue Cross",
-  },
-]
+import { InsuranceProvider } from "@/models"
 
-export function InsuranceProviderCombobox() {
+export function InsuranceProviderCombobox({ insuranceProviders, onChange }: { insuranceProviders: InsuranceProvider[], onChange: (val: string) => void }) {
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState("")
 
@@ -41,7 +32,7 @@ export function InsuranceProviderCombobox() {
           className="w-[200px] justify-between"
         >
           {value
-            ? insurance_providers.find((insurance_provider) => insurance_provider.value === value)?.label
+            ? insuranceProviders.find((insuranceProvider) => insuranceProvider.slug === value)?.name
             : "Insurance"}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -49,24 +40,25 @@ export function InsuranceProviderCombobox() {
       <PopoverContent className="w-[200px] p-0">
         <Command>
           <CommandInput placeholder="Search insurance..." />
-          <CommandEmpty>No insurance_provider found.</CommandEmpty>
+          <CommandEmpty>No insurance found.</CommandEmpty>
           <CommandGroup>
-            {insurance_providers.map((insurance_provider) => (
+            {insuranceProviders.map((insuranceProvider) => (
               <CommandItem
-                key={insurance_provider.value}
-                value={insurance_provider.value}
+                key={insuranceProvider.slug}
+                value={insuranceProvider.slug}
                 onSelect={(currentValue) => {
                   setValue(currentValue === value ? "" : currentValue)
                   setOpen(false)
+                  onChange(currentValue === value ? null : currentValue)
                 }}
               >
                 <Check
                   className={cn(
                     "mr-2 h-4 w-4",
-                    value === insurance_provider.value ? "opacity-100" : "opacity-0"
+                    value === insuranceProvider.slug ? "opacity-100" : "opacity-0"
                   )}
                 />
-                {insurance_provider.label}
+                {insuranceProvider.name}
               </CommandItem>
             ))}
           </CommandGroup>
@@ -75,5 +67,3 @@ export function InsuranceProviderCombobox() {
     </Popover>
   )
 }
-
-

@@ -11,3 +11,13 @@ export interface Therapist {
   phone: string;
   avatar_url: string;
 }
+
+export interface Office {
+  slug: string;
+  name: string;
+}
+
+export interface InsuranceProvider {
+  slug: string;
+  name: string;
+}

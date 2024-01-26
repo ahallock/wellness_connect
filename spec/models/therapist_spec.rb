@@ -19,7 +19,7 @@ RSpec.describe Therapist, type: :model do
       let!(:office) { create(:office) }
       let!(:therapist) { create(:therapist, offices: [office]) }
       let!(:therapist2) { create(:therapist) }
-      let(:params) { { offices: ["The Bronx"] } }
+      let(:params) { { office: "The Bronx" } }
       let(:result) { Therapist.search(params) }
 
       it "returns only the therapists with offices" do
@@ -32,7 +32,7 @@ RSpec.describe Therapist, type: :model do
       let!(:insurance_provider) { create(:insurance_provider) }
       let!(:therapist) { create(:therapist, insurance_providers: [insurance_provider]) }
       let!(:therapist2) { create(:therapist) }
-      let(:params) { { insurance_providers: ["Blue Cross"] } }
+      let(:params) { { insurance_provider: "Blue Cross" } }
       let(:result) { Therapist.search(params) }
 
       it "returns only the therapists with insurance providers" do

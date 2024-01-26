@@ -16,18 +16,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-const offices = [
-  {
-    value: "humana",
-    label: "Humana",
-  },
-  {
-    value: "bluecross",
-    label: "Blue Cross",
-  },
-]
+import { Office } from "@/models"
 
-export function OfficeCombobox() {
+export function OfficeCombobox({ offices, onChange }: { offices: Office[], onChange: (val: string) => void }) {
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState("")
 
@@ -41,7 +32,7 @@ export function OfficeCombobox() {
           className="w-[200px] justify-between"
         >
           {value
-            ? offices.find((office) => office.value === value)?.label
+            ? offices.find((office) => office.slug === value)?.name
             : "Office"}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -53,20 +44,21 @@ export function OfficeCombobox() {
           <CommandGroup>
             {offices.map((office) => (
               <CommandItem
-                key={office.value}
-                value={office.value}
+                key={office.slug}
+                value={office.slug}
                 onSelect={(currentValue) => {
                   setValue(currentValue === value ? "" : currentValue)
                   setOpen(false)
+                  onChange(currentValue === value ? null : currentValue)
                 }}
               >
                 <Check
                   className={cn(
                     "mr-2 h-4 w-4",
-                    value === office.value ? "opacity-100" : "opacity-0"
+                    value === office.slug ? "opacity-100" : "opacity-0"
                   )}
                 />
-                {office.label}
+                {office.name}
               </CommandItem>
             ))}
           </CommandGroup>

@@ -1,11 +1,17 @@
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 
-interface PaginationProps {
+export interface PaginationProps {
   total: number;
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+  startCursor: string;
+  endCursor: string;
+  onNextPage: (cursor: string) => void;
+  onPreviousPage: (cursor: string) => void;
 }
 
-const Pagination = ({ total }: PaginationProps) => {
+const Pagination = ({ total, hasPreviousPage, hasNextPage, startCursor, endCursor, onNextPage, onPreviousPage }: PaginationProps) => {
   return (
    <nav
       className="flex items-center justify-between bg-white px-4 py-3 sm:px-6"
@@ -17,8 +23,8 @@ const Pagination = ({ total }: PaginationProps) => {
       </p>
     </div>
     <div className="flex flex-1 justify-between sm:justify-end gap-2">
-      <Button variant="outline">Previous</Button>
-      <Button variant="outline">Next</Button>
+      {hasPreviousPage && <Button variant="outline" onClick={() => onPreviousPage(startCursor)}>Previous</Button>}
+      {hasNextPage && <Button variant="outline" onClick={() => onNextPage(endCursor)}>Next</Button>}
     </div>
   </nav>
   ) 

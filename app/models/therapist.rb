@@ -14,7 +14,7 @@ class Therapist < ApplicationRecord
   has_and_belongs_to_many :insurance_providers
   has_and_belongs_to_many :offices
 
-  def self.search(params, options = {})
+  def self.search(params, options = {limit: 10})
     query = Therapist
     query = 
       query
@@ -24,22 +24,22 @@ class Therapist < ApplicationRecord
 
     query = query.where(telehealth: true) if params[:telehealth] == true
 
-    if params[:offices].present?
+    if params[:office].present?
       query =
         query
-          .joins(:offices_therapists)
           .joins(:offices)
-          .where(offices: { name: params[:offices] })
+          .where(offices: { name: params[:office] })
     end
 
-    if params[:insurance_providers].present?
+    if params[:insurance_provider].present?
       query =
         query
-          .joins(:insurance_providers_therapists)
           .joins(:insurance_providers)
-          .where(insurance_providers: { name: params[:insurance_providers] })
+          .where(insurance_providers: { name: params[:insurance_provider] })
     end
 
-    RailsCursorPagination::Paginator.new(query, **params.slice(:before, :after)).fetch(with_total: true)
+    opts = options.merge(params.slice(:before, :after))
+
+    RailsCursorPagination::Paginator.new(query, **opts).fetch(with_total: true)
   end
 end

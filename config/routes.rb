@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
   namespace :api do
     resources :therapists, only: [:index]
+    resources :offices, only: [:index]
+    resources :insurance_providers, only: [:index]
   end
 
   # Defines the root path route ("/")

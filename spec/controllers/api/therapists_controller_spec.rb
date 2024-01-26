@@ -4,7 +4,7 @@ RSpec.describe Api::TherapistsController, type: :controller do
   describe '#index' do
     context "when params are invalid" do
       it 'raises an error' do
-        expect { get :index, params: { offices: [true] } }.to raise_error(ActionController::BadRequest)
+        expect { get :index, params: { telehealth: "foo" } }.to raise_error(ActionController::BadRequest)
       end
     end
 

@@ -1,5 +1,5 @@
 class Api::TherapistsController < ApplicationController
-  RECORD_LIMIT = 2
+  RECORD_LIMIT = 10
 
   def index
     params = validate_params!(Api::TherapistSearchParamsSchema.new)

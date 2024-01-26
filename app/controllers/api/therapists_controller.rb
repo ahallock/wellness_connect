@@ -1,7 +1,9 @@
 class Api::TherapistsController < ApplicationController
+  RECORD_LIMIT = 2
+
   def index
     params = validate_params!(Api::TherapistSearchParamsSchema.new)
-    render json: build_json_response(Therapist.search(params))
+    render json: build_json_response(Therapist.search(params, limit: RECORD_LIMIT))
   end
 
   private

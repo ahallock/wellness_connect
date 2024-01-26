@@ -9,6 +9,7 @@ Wellness Connect is a local directory of therapists in the NYC area.
 * `bundle install`
 * `yarn install`
 
+## Setup
 ### Setup database
 * `bin/rails db:create`
 * `bin/rails db:migrate`
@@ -16,5 +17,6 @@ Wellness Connect is a local directory of therapists in the NYC area.
 ### Load sample therapist data
 `bin/rake load_sample_therapists`
 
+## Running
 ### Start the server
 `bin/dev`

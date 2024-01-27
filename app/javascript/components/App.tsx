@@ -27,37 +27,59 @@ interface SearchResult {
   }
 }
 
+interface SearchForm {
+  telehealth: boolean;
+  office: string | null;
+  insurance_provider: string | null;
+  after: string | null;
+  before: string | null;
+  data: Therapist[] | null;
+  total: number | null;
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+  startCursor: string | null;
+  endCursor: string | null;
+  shouldFetch: boolean;
+}
+
 const App = ({ arg }: AppProps) => {
-  const [searchResult, setSearchResult] = useState<SearchResult>({});
-  const [isLoading, setIsLoading] = useState(false);
-  const [telehealth, setTelehealth] = useState(false);
-  const [office, setOffice] = useState<string | null>(null);
   const [offices, setOffices] = useState<Office[]>([]);
-  const [insuranceProvider, setInsuranceProvider] = useState<string | null>(null);
   const [insuranceProviders, setInsuranceProviders] = useState<InsuranceProvider[]>([]);
-  const [previousPage, setPreviousPage] = useState<string | null>(null);
-  const [nextPage, setNextPage] = useState<string | null>(null);
+  const [searchForm, setSearchForm] = useState<SearchForm>({
+    telehealth: false,
+    office: null,
+    insuranceProvider: null,
+    after: null,
+    before: null,
+    data: null,
+    total: null,
+    hasPreviousPage: false,
+    hasNextPage: false,
+    startCursor: null,
+    endCursor: null,
+    shouldFetch: true,
+  });
 
   const handleTelehealthChange = (toggle: boolean) => {
-    setTelehealth(toggle);
+    setSearchForm({ ...searchForm, telehealth: toggle, before: null, after: null, shouldFetch: true });
   }
 
   const handleOfficeChange = (val: string) => {
-    setOffice(offices.find((office) => office.slug === val)?.name)
+    const office = offices.find((office) => office.slug === val)?.name;
+    setSearchForm({ ...searchForm, office: office, before: null, after: null, shouldFetch: true });
   }
 
   const handleInsuranceProviderChange = (val: string) => {
-    setInsuranceProvider(insuranceProviders.find((insuranceProvider) => insuranceProvider.slug === val)?.name)
+    const insuranceProvider = insuranceProviders.find((insuranceProvider) => insuranceProvider.slug === val)?.name;
+    setSearchForm({ ...searchForm, insuranceProvider: insuranceProvider, before: null, after: null, shouldFetch: true });
   }
 
   const handleNextPage = (val: string) => {
-    setPreviousPage(null);
-    setNextPage(val);
+    setSearchForm({ ...searchForm, after: val, before: null, shouldFetch: true });
   }
 
   const handlePreviousPage = (val: string) => {
-    setNextPage(null);
-    setPreviousPage(val);
+    setSearchForm({ ...searchForm, before: val, after: null, shouldFetch: true });
   }
 
   useEffect(() => {
@@ -90,40 +112,49 @@ const App = ({ arg }: AppProps) => {
 
   const buildQueryParams = () => {
     const params = new URLSearchParams();
-    if (telehealth) {
+    if (searchForm.telehealth) {
       params.append("telehealth", "true");
     }
-    if (office) {
-      params.append("office", office);
+    if (searchForm.office) {
+      params.append("office", searchForm.office);
     }
-    if (insuranceProvider) {
-      params.append("insurance_provider", insuranceProvider);
+    if (searchForm.insuranceProvider) {
+      params.append("insurance_provider", searchForm.insuranceProvider);
     }
-    if (nextPage) {
-      params.append("after", nextPage);
+    if (searchForm.after) {
+      params.append("after", searchForm.after);
     }
-    if (previousPage) {
-      params.append("before", previousPage);
+    if (searchForm.before) {
+      params.append("before", searchForm.before);
     }
     return params;
   }
 
   useEffect(() => {
     const fetchTherapists = async() => {
-      setIsLoading(true);
       try {
         const params = buildQueryParams();
         const response = await fetch(`${BASE_PATH}/therapists?${params.toString()}`);
         const result = await response.json() as SearchResult;
-        setSearchResult(result);
+        setSearchForm(prev => ({
+          ...prev,
+          data: result.data,
+          total: result.total,
+          hasPreviousPage: result.page_info.has_previous_page,
+          hasNextPage: result.page_info.has_next_page,
+          startCursor: result.page_info.start_cursor,
+          endCursor: result.page_info.end_cursor,
+          shouldFetch: false
+        }));
       } catch (e: any) {
         toast("Something went wrong")
-      } finally {
-        setIsLoading(false);
       }
     }
-    fetchTherapists();
-  }, [telehealth, offices, office, insuranceProviders, insuranceProvider, previousPage, nextPage]);
+
+    if (searchForm.shouldFetch) {
+      fetchTherapists();
+    }
+  }, [searchForm.shouldFetch]);
     
   return (
     <>
@@ -131,21 +162,21 @@ const App = ({ arg }: AppProps) => {
         <OfficeCombobox offices={offices} onChange={handleOfficeChange} />
         <InsuranceProviderCombobox insuranceProviders={insuranceProviders} onChange={handleInsuranceProviderChange} />
         <div className="flex items-center space-x-2">
-          <Switch id="telehealth" checked={telehealth} onCheckedChange={handleTelehealthChange} />
+          <Switch id="telehealth" checked={searchForm.telehealth} onCheckedChange={handleTelehealthChange} />
           <Label htmlFor="telehealth">Offers remote sessions</Label>
         </div>
       </div>
 
-      <TherapistList isLoading={isLoading} therapists={searchResult.data || []} />
+      <TherapistList isLoading={searchForm.shouldFetch} therapists={searchForm.data || []} />
 
       <div className="mt-6">
-        {!isLoading &&
+        {!searchForm.shouldFetch &&
           <Pagination
-            total={searchResult.total}
-            hasPreviousPage={searchResult.page_info?.has_previous_page}
-            hasNextPage={searchResult.page_info?.has_next_page}
-            startCursor={searchResult.page_info?.start_cursor}
-            endCursor={searchResult.page_info?.end_cursor}
+            total={searchForm.total}
+            hasPreviousPage={searchForm.hasPreviousPage}
+            hasNextPage={searchForm.hasNextPage}
+            startCursor={searchForm.startCursor}
+            endCursor={searchForm.endCursor}
             onNextPage={handleNextPage}
             onPreviousPage={handlePreviousPage}
           />

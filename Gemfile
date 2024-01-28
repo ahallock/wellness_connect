@@ -77,3 +77,5 @@ end
 gem "dry-schema", "~> 1.13"
 
 gem "rails_cursor_pagination", "~> 0.4.0"
+
+gem "active_model_serializers", "~> 0.10.14"

@@ -1,7 +1,7 @@
 import React from 'react'
 import { ChevronRight } from "lucide-react"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
-import { Therapist } from '@/models'
+import { Therapist } from '@/types'
 
 const TherapistSlideover = ({ therapist }: { therapist: Therapist }) => {
   return (
@@ -65,6 +65,12 @@ const TherapistSlideover = ({ therapist }: { therapist: Therapist }) => {
                 </dd>
               </div>
               <div>
+                <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">Credentials</dt>
+                <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
+                  {therapist.credentials.map((credential) => credential.abbreviation).join(', ')}
+                </dd>
+              </div>
+              <div>
                 <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">Bio</dt>
                 <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
                   <p>{therapist.bio}</p>
@@ -82,6 +88,12 @@ const TherapistSlideover = ({ therapist }: { therapist: Therapist }) => {
                 <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">Insurance</dt>
                 <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
                   {therapist.insurance_providers.map((insurance) => insurance.name).join(', ')}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">Offers Remote Sessions (telehealth)</dt>
+                <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
+                  {therapist.telehealth ? 'Yes' : 'No'}
                 </dd>
               </div>
             </dl>

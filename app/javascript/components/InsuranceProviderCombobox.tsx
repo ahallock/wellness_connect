@@ -16,7 +16,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-import { InsuranceProvider } from "@/models"
+import { InsuranceProvider } from "@/types"
 
 export function InsuranceProviderCombobox({ insuranceProviders, onChange }: { insuranceProviders: InsuranceProvider[], onChange: (val: string) => void }) {
   const [open, setOpen] = React.useState(false)

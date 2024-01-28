@@ -1,5 +1,6 @@
 import * as React from "react"
 import { Check, ChevronsUpDown } from "lucide-react"
+import { useQuery } from "@tanstack/react-query";
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -16,9 +17,14 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-import { Office } from "@/models"
+import { Office } from "@/types"
 
-export function OfficeCombobox({ offices, onChange }: { offices: Office[], onChange: (val: string) => void }) {
+interface OfficeComboboxProps {
+  offices: Office[],
+  onChange: (val: string) => void
+}
+
+export function OfficeCombobox({ offices, onChange }: OfficeComboboxProps) {
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState("")
 

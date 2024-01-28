@@ -19,7 +19,7 @@ const Pagination = ({ total, hasPreviousPage, hasNextPage, startCursor, endCurso
     >
     <div className="hidden sm:block">
       <p className="text-sm text-gray-700">
-        <span className="font-medium">{total}</span> results
+        <span className="font-medium">{total}</span> {total === 1 ? "result" : "results"}
       </p>
     </div>
     <div className="flex flex-1 justify-between sm:justify-end gap-2">

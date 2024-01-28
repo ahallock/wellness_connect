@@ -21,27 +21,8 @@ class Api::TherapistsController < ApplicationController
   def build_json_response(query_result)
     {
       total: query_result[:total],
-      page_info: query_result[:page_info],
-      data: query_result[:page].map do |page|
-        therapist = page[:data]
-
-        {
-          id: therapist.id,
-          first_name: therapist.first_name,
-          last_name: therapist.last_name,
-          telehealth: therapist.telehealth,
-          profession: therapist.profession,
-          license_valid: therapist.license_valid,
-          website: therapist.website,
-          email: therapist.email,
-          bio: therapist.bio,
-          phone: therapist.phone,
-          avatar_url: therapist.avatar_url,
-          offices: therapist.offices,
-          insurance_providers: therapist.insurance_providers,
-          credentials: therapist.credentials
-        }
-      end
+      pagination: query_result[:page_info],
+      data: query_result[:page].map{|p| TherapistSerializer.new(p[:data]) }
     }
   end
 end

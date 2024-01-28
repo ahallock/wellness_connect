@@ -1,6 +1,6 @@
 import * as React from "react"
 import { ChevronRight } from "lucide-react"
-import { Therapist } from "@/models";
+import { Therapist } from "@/types";
 import SkeletonRow from "@/components/ui/skeleton_row"
 import TherapistSlideover from "@/components/TherapistSlideover"
 

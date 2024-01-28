@@ -21,3 +21,14 @@ export interface InsuranceProvider {
   slug: string;
   name: string;
 }
+
+export interface SearchResult<Type> {
+  total: number;
+  data: Type[],
+  pagination: {
+    has_previous_page: boolean;
+    has_next_page: boolean;
+    start_cursor: string;
+    end_cursor: string;
+  }
+}

@@ -50,7 +50,7 @@ const TherapistSlideover = ({ therapist }: { therapist: Therapist }) => {
                   </div>
                   <div className="mt-5 flex flex-wrap space-y-3 sm:space-x-3 sm:space-y-0">
                     <button type="button" className="inline-flex w-full flex-shrink-0 items-center justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:flex-1">Message</button>
-                    <button type="button" className="inline-flex w-full flex-1 items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Call</button>
+                    <a href={`tel:${therapist.phone}`} className="inline-flex w-full flex-1 items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Call</a>
                   </div>
                 </div>
               </div>
@@ -82,7 +82,9 @@ const TherapistSlideover = ({ therapist }: { therapist: Therapist }) => {
               </div>
               <div>
                 <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">Website</dt>
-                <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">{therapist.website}</dd>
+                <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
+                  <a href={therapist.website} target="_blank" rel="noreferrer">{therapist.website}</a>
+                 </dd>
               </div>
               <div>
                 <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">Insurance</dt>
